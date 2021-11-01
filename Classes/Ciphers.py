@@ -1,3 +1,6 @@
+from typing import Hashable
+import numpy as np
+
 class Ciphers:
     '''
     This class contains many tools to for use in encryption
@@ -69,10 +72,9 @@ class Ciphers:
         ";" : 29
     }
 
-    HASH_LEN = len(num2let)
-
+    
     def __init__(self) -> None:
-        pass
+        self.HASH_LEN = len(self.num2let)
 
     def word2list(self,word):
         '''
@@ -155,6 +157,42 @@ class Ciphers:
 
     #def permutation_cipher(self, sentence, keyword):
 
+    def mod_inv(self,num, mod):
+        for i in range(mod):
+            if num * i%mod == 1:
+                return i
+
+
+
+    def inverse_affine_cipher(self, cipher, coeff, offset):
+        new = []
+        for i in self.word2list(cipher):
+            coeff_inv = self.mod_inv(coeff, self.HASH_LEN)
+
+            temp = i * coeff_inv - offset * coeff_inv
+            new.append(temp%self.HASH_LEN)
+        return self.list2word(new)
+    
+    def block_cipher(self, plaintext, dummy_char):
+        if len(plaintext)%2 == 1:
+            plaintext += dummy_char
+
+        nums = self.word2list(plaintext)
+        pairs = []
+
+        while len(nums) != 0:
+            pair = []
+
+            pair.append(nums.pop(0))
+            pair.append(nums.pop(0))
+
+            pairs.append(pair)
+
+        print(pairs)
+
+
+
+
 if __name__ == "__main__":
 
     c = Ciphers()
@@ -166,7 +204,11 @@ if __name__ == "__main__":
     #print(vigenere_cipher("gum.bo", "lemon", "."))
     #print(vigenere_keyword_inverse("lemon"))
     #print(vigenere_cipher("RYY.OZ", "T SQR", "."))
-    print(c.affine_cipher("hello world", 1, 6))
-    print(c.affine_cipher("hello world", 2, 7))
-    print(c.affine_cipher("hello world", 3, 8))
-    print(c.affine_cipher("hello world", 4, 9))
+    text = "howard hastily hoiseted his happy halloween harold now hovering high overhead his house"
+    c.block_cipher("Hello", "X")
+
+
+    
+
+    
+

@@ -498,6 +498,7 @@ def generate_dataset(original_mssg, dataset_size, n_redundancy, corruption_proba
     #return the dataset
     return np.array(data)
 
+
 if __name__ == "__main__":
     
     char = char2byte("f")
@@ -516,7 +517,7 @@ if __name__ == "__main__":
     #print(char_array)
     #print(send_message("abc123", 2, 0.6))
     
-    data = generate_dataset("eat my ass", 50, 1, .01, False)
+    data = generate_dataset("cheese pizza in my mouth now", 50, 1, .5, True)
     print(data)
     draw_histogram(data)
     
