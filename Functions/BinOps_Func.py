@@ -262,8 +262,19 @@ def redundant_to_short(redundant_byte_array):
 
     #Iterate through each redundant byte in the byte array
     for redundant_byte in redundant_byte_array:
-        #append the original byte to the short array
-        short_array.append([x for x in redundant_byte[:8]])
+        byte = []
+        #Iterate through each redundant bit and convert them back to 
+        #single bit
+        for redundant_bit in redundant_byte:
+            one_count = 0
+            zero_count = 0
+
+            for bit_i, bit_j in zip(redundant_bit,redundant_bit):
+                one_count += 1 if bit_i == 1 else 0
+                zero_count += 1 if bit_j == 0 else 0
+            
+            byte.append(1 if one_count > zero_count else 0)
+        short_array.append(byte)
 
     #return the short array as a numpy array
     return np.array(short_array)
@@ -510,20 +521,11 @@ if __name__ == "__main__":
     print(char_array1)
     #print(bin2str(byte_array))
     #print(str2bin("abc123"))
-    
+    a = short_to_redundant(char_array1, 3)
+    #print(a)
 
-    #print(byte2char(byte))
-    #print(corrupt_code(byte, .5))
-    #print(ord2eight_bit(54))
-    #print(char_array)
-    #print(send_message("abc123", 2, 0.6))
+    print(redundant_to_short(a))
     
-    #data = generate_dataset("cheese pizza in my mouth now", 50, 1, .5, True)
-    #print(data)
-    #draw_histogram(data)
-    
-    #test_byte = [1,0,0,1,1,1,1,0]
-    draw_histogram([1,1,1,0,1,0,1,0])
 
 
     
