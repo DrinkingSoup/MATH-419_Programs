@@ -107,12 +107,9 @@ class ModularMatrix:
 
 
 if __name__ == "__main__":
-    test = [[1,2], [3,4]]
+    test = [[2,5], [11,7]]
     a = ModularMatrix(13, *test)
-    b = ModularMatrix(13, [5,6], [7,8])
-    c = ModularMatrix(13, [1,2], [3,4], [5,6], [7, 8])
-    
-    p = [1,4]
-    q = [2,5]
 
-    print(a.determinant)
+    
+
+    print(a.inverse)

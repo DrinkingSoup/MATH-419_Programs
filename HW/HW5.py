@@ -1,7 +1,4 @@
-##----HOMEWORK 4 - ADAM UREMEK ----##
-
-from typing import Hashable
-
+##----HOMEWORK 5 - ADAM UREMEK ----##
 
 num2let = {
         0 : "A",
@@ -211,55 +208,55 @@ def list2word(num):
     return "".join(num2let[x] for x in num)
 
 def shift_cipher(sentence, shift_val, character_flags=""):
-        '''
-        Encrypts plaintext using a shift cipher with flags that allow certain
-        characters to be ignored if desired
-        
-        @param sentence: The plaintext that will be shifted
-        @param shift_val: The amount of shift
-        @param character_flags: A string of characters to be ignored e.i ";.,"
-        '''
-        #Storage for the numbers of the cipher
-        cipher = []
+    '''
+    Encrypts plaintext using a shift cipher with flags that allow certain
+    characters to be ignored if desired
+    
+    @param sentence: The plaintext that will be shifted
+    @param shift_val: The amount of shift
+    @param character_flags: A string of characters to be ignored e.i ";.,"
+    '''
+    #Storage for the numbers of the cipher
+    cipher = []
 
-        for i in word2list(sentence):
-            if num2let[i] in list(character_flags.upper()):
-                cipher.append(i)
-            else:
-                cipher.append((i + shift_val)%HASH_LEN)
+    for i in word2list(sentence):
+        if num2let[i] in list(character_flags.upper()):
+            cipher.append(i)
+        else:
+            cipher.append((i + shift_val)%HASH_LEN)
 
-        return list2word(cipher)
+    return list2word(cipher)
 
 def vigenere_cipher(sentence, keyword, character_flags=""):
-        '''
-        Encryptes plaintext using teh vigenere cipher algorithm
-        using a keyword and optional characters to ignore.
+    '''
+    Encryptes plaintext using teh vigenere cipher algorithm
+    using a keyword and optional characters to ignore.
 
-        @param sentence: The plaintext that will be encrypted
-        @param keyword: The keyword that will be used to encrypt the plaintext
-        @param character_flags: A string of characters to be ignored e.i ";.,"
-        '''
-        key_char_queue = [let2num[keyword[x%len(keyword)].upper()] for x in range(len(sentence))]
-        cipher = []
+    @param sentence: The plaintext that will be encrypted
+    @param keyword: The keyword that will be used to encrypt the plaintext
+    @param character_flags: A string of characters to be ignored e.i ";.,"
+    '''
+    key_char_queue = [let2num[keyword[x%len(keyword)].upper()] for x in range(len(sentence))]
+    cipher = []
 
-        for char_num,shift in zip(word2list(sentence), key_char_queue):
-            if num2let[char_num] in list(character_flags.upper()):
-                cipher.append(char_num)
-            else:
-                cipher.append((char_num + shift)%HASH_LEN)
+    for char_num,shift in zip(word2list(sentence), key_char_queue):
+        if num2let[char_num] in list(character_flags.upper()):
+            cipher.append(char_num)
+        else:
+            cipher.append((char_num + shift)%HASH_LEN)
 
-        return list2word(cipher)
+    return list2word(cipher)
 
 def vigenere_keyword_inverse(keyword):
-        '''
-        Produces a keyword that decrypts a vingenere cipher given
-        the keyword that was used to produce the cipher
+    '''
+    Produces a keyword that decrypts a vingenere cipher given
+    the keyword that was used to produce the cipher
 
-        @param keyword: The keyword used to create the original cipher
-        '''
-        inverse_key = [HASH_LEN - let2num[x] for x in keyword.upper()]
+    @param keyword: The keyword used to create the original cipher
+    '''
+    inverse_key = [HASH_LEN - let2num[x] for x in keyword.upper()]
 
-        return list2word(inverse_key)
+    return list2word(inverse_key)
 
 def extended_euclidean_algorithm(a, b, twice=False):
     if a == 0:
@@ -293,13 +290,13 @@ def affine_cipher(sentence, coeff, offset):
     return list2word(cipher)
 
 def inverse_affine_cipher(cipher, coeff, offset):
-        plaintext_list = []
-        for i in word2list(cipher):
-            coeff_inv = mod_inv(coeff, 27)
+    plaintext_list = []
+    for i in word2list(cipher):
+        coeff_inv = mod_inv(coeff, 27)
 
-            temp = i * coeff_inv - offset * coeff_inv
-            plaintext_list.append(temp%27)
-        return list2word(plaintext_list)
+        temp = i * coeff_inv - offset * coeff_inv
+        plaintext_list.append(temp%27)
+    return list2word(plaintext_list)
 
 def block_cipher(plaintext, coeff_mat, shift, dummy_char):
     if len(plaintext)%2 == 1:
@@ -317,6 +314,7 @@ def block_cipher(plaintext, coeff_mat, shift, dummy_char):
         pairs.append(pair)
 
     new = []
+
     for pair in pairs:
         new += [x for x in (ModularMatrix(coeff_mat.modulus, pair) * coeff_mat + shift).rows[0]]
 
@@ -457,4 +455,3 @@ if __name__ == "__main__":
     
 
     print("----------------------\n")
-

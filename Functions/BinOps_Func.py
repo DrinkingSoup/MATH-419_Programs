@@ -218,8 +218,10 @@ def short_to_redundant(short_byte_array, multiplier):
     '''
 
     #Raise an error if the multiplier is negative
-    if(multiplier < 0):
+    if multiplier < 0:
         raise ValueError("Multiplier cant be negative")
+    if multiplier%2 == 0:
+        raise ValueError("Multiplier cant be even")
 
     #Place to store the new redundant array
     redundant_array = []
@@ -228,11 +230,9 @@ def short_to_redundant(short_byte_array, multiplier):
     for byte in short_byte_array:
         redundant_entry = []
 
-        #Combine a "multiplier" amount of byte entries into a single entry
-        for i in range(multiplier):
-            #Note: the numpy array needs to be converted
-            #back into a regular list for the += operator to work
-            redundant_entry += byte.tolist()
+        #Iterate through every bit in the byte
+        for bit in byte:
+            redundant_entry.append([bit for x in range(multiplier)])
         
         #add the redundant entry to the redundant array
         redundant_array.append(redundant_entry)
@@ -507,6 +507,7 @@ if __name__ == "__main__":
 
     char_array2 = str2bin("abc456")
 
+    print(char_array1)
     #print(bin2str(byte_array))
     #print(str2bin("abc123"))
     
@@ -517,11 +518,12 @@ if __name__ == "__main__":
     #print(char_array)
     #print(send_message("abc123", 2, 0.6))
     
-    data = generate_dataset("cheese pizza in my mouth now", 50, 1, .5, True)
-    print(data)
-    draw_histogram(data)
+    #data = generate_dataset("cheese pizza in my mouth now", 50, 1, .5, True)
+    #print(data)
+    #draw_histogram(data)
     
-   
+    #test_byte = [1,0,0,1,1,1,1,0]
+    draw_histogram([1,1,1,0,1,0,1,0])
 
 
     
